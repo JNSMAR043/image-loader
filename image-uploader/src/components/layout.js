@@ -24,9 +24,8 @@ const Layout = ({ children }) => {
           }
         }
       `}
-      render={data => (
+      render={() => (
         <div style={{ minHeight: '100vh', backgroundColor: '#FFF' }}>
-          {/* <Header siteTitle={data.site.siteMetadata.title} /> */}
           <Header siteTitle="Image Uploader" />
           <div
             style={{

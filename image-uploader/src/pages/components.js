@@ -2,12 +2,12 @@ import React from 'react'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
+import Loading from '../components/loading';
 
 const SecondPage = () => (
   <Layout>
+    <Loading />
     <SEO title="Page two" />
-    <h1>Components</h1>
-    <p>Welcome to the components page.</p>
   </Layout>
 )
 

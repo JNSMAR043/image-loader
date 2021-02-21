@@ -1,0 +1,34 @@
+.input-container {
+    position: relative;
+}
+
+
+.dropzone-input {
+    border: 2px blue dashed;
+    width: 100%;
+    height: 400px;
+    position: relative;
+    text-align: center;
+}
+
+.dropzone-input:focus {
+    border: 5px blue solid;
+    background-color: rgb(205, 205, 245);
+    opacity: 0.5;
+}
+
+.text-center label{
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+.icon-svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
