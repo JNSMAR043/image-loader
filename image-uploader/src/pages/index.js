@@ -35,6 +35,7 @@ const IndexPage = () => {
   }
 
   const onDrop = useCallback(acceptedFiles => {
+    debugger;
     console.log(acceptedFiles)
   }, []);
 

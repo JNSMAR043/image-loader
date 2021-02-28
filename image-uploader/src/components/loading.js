@@ -14,18 +14,24 @@ const useStyles = makeStyles((theme) => ({
 
 const Loading = () => {
     const classes = useStyles();
-    const [open, setOpen] = React.useState(true);
+    const [open, setOpen] = React.useState(false);
     const displayLoader = () => {
         setOpen(true);
     }
-    console.log('Open: ', open);
-    console.log('Classes: ', classes.backdrop)
+
     return (
             <div className="progress-bar-wrapper">
-                <Backdrop className={classes.backdrop} open={open}>
-                    <CircularProgress color="primary" className="progress-spinner"/>
-                </Backdrop>
-                <h1>Uploading image</h1>
+                { open ?
+                    <Backdrop className={classes.backdrop} open={open}>
+                        <CircularProgress color="primary" className="progress-spinner"/>
+                    </Backdrop>
+                    : ''
+                }
+                    <h1>Uploading image</h1>
+
+                <Button variant="contained" color="primary" onClick={() => displayLoader() }>
+                    Primary
+                </Button>
             </div>
         )
 }
