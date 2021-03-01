@@ -10,6 +10,8 @@ const Dropzone = ({ onDrop, accept }) => {
         accept
       });
 
+
+
     return (
         <div {...getRootProps()}>
             <div className="input-container">
@@ -21,7 +23,7 @@ const Dropzone = ({ onDrop, accept }) => {
                         </label>
                     ) : (
                         <label className="dropzone-content">
-                            Drag 'n' drop some files here, or click to select files
+                            Drag 'n' drop some files here
                         </label>
                     )}
                 </div>
