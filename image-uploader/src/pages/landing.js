@@ -2,7 +2,7 @@ import React from 'react'
 
 import Layout from '../components/layout'
 import SEO from '../components/seo'
-import ImageDisplay from '../components/ImageDisplay';
+import ImageDisplay from '../components/imageDisplay';
 
 const Landing = () => (
   <Layout>
