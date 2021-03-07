@@ -1,13 +1,10 @@
 import React from "react";
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import CardMedia from '@material-ui/core/CardMedia';
 import { makeStyles } from '@material-ui/core/styles';
 import CloudDoneIcon from '@material-ui/icons/CloudDone';
-import './imageDisplay.css';
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,9 +36,16 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ImageDisplay = () => {
+function ImageDisplay(props) {
     const classes = useStyles();
 
+    const copyUrl =() => {
+        var urlText = document.getElementById('url-text');
+        urlText.select();
+        urlText.setSelectionRange(0, 99999);
+
+        document.execCommand('copy');
+    }
 
     return (
         <Card className={classes.root}>
@@ -58,14 +62,14 @@ const ImageDisplay = () => {
             </h4>
             <CardMedia
                 className={classes.media}
-                image="../Nunes.jpg"
+                image={props.imageUrl}
                 title="User Image"
             />
             <div>
                 <TextField
                     className={classes.textWrapper}
                     id="url-text"
-                    defaultValue="Image URL"
+                    defaultValue={props.imageUrl}
                     variant="filled"
                     InputProps={{
                         readOnly: true,
@@ -74,7 +78,8 @@ const ImageDisplay = () => {
                 <Button
                     className={classes.buttonWrapper}
                     variant="contained"
-                    color="primary">
+                    color="primary"
+                    onClick={copyUrl}>
                     Copy
                 </Button>
             </div>

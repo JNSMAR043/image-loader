@@ -3,45 +3,24 @@ import AWS from 'aws-sdk';
 import Layout from '../components/layout'
 import SEO from '../components/seo'
 import Dropzone from '../components/dropzone'
-
-import { makeStyles } from '@material-ui/core/styles'
+import ImageDisplay from '../components/imageDisplay'
+import Loading from '../components/loading'
 import Divider from '@material-ui/core/Divider'
 
-// const useStyles = makeStyles(theme => ({
-//   root: {
-//     width: '100%',
-//     backgroundColor: theme.palette.background.paper,
-//   },
-//   nested: {
-//     paddingLeft: theme.spacing(4),
-//   },
-// }));
 
 const IndexPage = () => {
+  // determine which page to render
+  const [showDropozone, toggleShowDropozone] = React.useState(true);
+  const [showSpinner, toggleShowSpinner] = React.useState(false);
+  const [showImagePage, toggleShowImagePage] = React.useState(false);
+  const [locationImage, setLoacationImage] = React.useState('');
 
-  //const classes = useStyles()
-  const [features, setFeatures] = React.useState(true)
-  const [info, setInfo] = React.useState(true)
+
   var bucketName = "imageuploaderbucket";
 
-  function handleClick(id) {
-    switch (id) {
-      case "features":
-        setFeatures(!features)
-        break;
-      case "info":
-        setInfo(!info)
-        break
-    }
-  }
-
   function addPhoto(acceptedFiles, image) {
-      // var file = files[0];
-      // var fileName = file.name;
-
       var imageKey = encodeURIComponent(acceptedFiles[0].name.toString());
       var photoKey = 'ImageUploader6/' + imageKey;
-      console.log(photoKey);
 
       // Use S3 ManagedUpload class as it supports multipart uploads
       var upload = new AWS.S3.ManagedUpload({
@@ -51,16 +30,21 @@ const IndexPage = () => {
             Body: image
           }
       });
-      //set loader to show here
+      //set loader to show
       var promise = upload.promise();
+
+      toggleShowSpinner(true);
+      toggleShowDropozone(false);
 
       promise.then(
           function(data) {
-            alert("Successfully uploaded photo.");
-            console.log(data.location);
+            setLoacationImage(data.Location)
+
+            toggleShowSpinner(false);
+            toggleShowImagePage(true);
           },
           function(err) {
-          return alert("There was an error uploading your photo: ", err.message);
+            return alert("There was an error uploading your photo: ", err.message);
           }
       );
   };
@@ -70,14 +54,11 @@ const IndexPage = () => {
       const reader = new FileReader();
       reader.onload = () => {
         const binaryStr = reader.result;
-        console.log('Binary String');
-        console.log(binaryStr);
         addPhoto(acceptedFiles, binaryStr);
       }
       reader.readAsArrayBuffer(file);
     });
 
-    console.log(acceptedFiles);
     var bucketRegion = "eu-west-1";
     var IdentityPoolId = "eu-west-1:394f4cff-dc30-4709-80c5-04d85a7e08c0";
 
@@ -86,11 +67,6 @@ const IndexPage = () => {
     credentials: new AWS.CognitoIdentityCredentials({
             IdentityPoolId: IdentityPoolId
         })
-    });
-
-    var s3 = new AWS.S3({
-        apiVersion: "2006-03-01",
-        params: { Bucket: bucketName }
     });
 
   }, []);
@@ -102,7 +78,9 @@ const IndexPage = () => {
           <br/>
           <br/>
           <h1 className="text-center">Drag and drop images</h1>
-          <Dropzone onDrop={onDrop} accept={"image/*"}/>
+          { showDropozone ? <Dropzone onDrop={onDrop} accept={"image/*"}/> : '' }
+          { showSpinner ? <Loading /> : '' }
+          { showImagePage ? <ImageDisplay imageUrl={locationImage} /> : '' }
       <Divider />
     </Layout>
   )

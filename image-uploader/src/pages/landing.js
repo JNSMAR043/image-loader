@@ -6,6 +6,7 @@ import ImageDisplay from '../components/ImageDisplay';
 
 const Landing = () => (
   <Layout>
+    {/* Page to view Image display component */}
     <ImageDisplay />
     <SEO title="landing" />
   </Layout>

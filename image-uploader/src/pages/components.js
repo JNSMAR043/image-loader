@@ -6,6 +6,7 @@ import Loading from '../components/loading';
 
 const SecondPage = () => (
   <Layout>
+    {/* Page to view loader component */}
     <Loading />
     <SEO title="Page two" />
   </Layout>
